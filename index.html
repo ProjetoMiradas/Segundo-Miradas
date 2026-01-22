@@ -4,15 +4,44 @@
   <meta charset="UTF-8">
   <title>PROJETO MIRADAS</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
 
   <style>
+    .video-container {
+  width: 100%;
+  max-width: 900px;
+  aspect-ratio: 16 / 9;   /* força proporção horizontal */
+  overflow: hidden;
+  border-radius: 12px;
+  margin: 0 auto;
+}
+
+.video-container video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;     /* CORTA as bordas pretas */
+}
+
+    .card {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+/* quando o card estiver visível */
+    .card.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
     * {
       box-sizing: border-box;
     }
 
     body {
       margin: 0;
-      font-family: Arial, Helvetica, sans-serif;
+      font-family:Verdana, Geneva, Tahoma, sans-serif;
       background-color: #000000;
       color: #ffffff;
     }
@@ -92,20 +121,165 @@
       margin-top: 30px;
     }
 
+    .social {
+  text-align: center;
+  padding: 30px 15px;
+}
+
+.social p {
+  margin-bottom: 12px;
+  font-size: 14px;
+  color: #cccccc;
+}
+
+.social-btn {
+  display: inline-block;
+  margin: 6px;
+  padding: 10px 18px;
+  border-radius: 22px;
+  font-size: 13px;
+  text-decoration: none;
+  color: #ffffff;
+}
+
+.instagram {
+  background-color: #c13584;
+}
+
+.youtube {
+  background-color: #ff0000;
+}
+
+.social-btn:active {
+  opacity: 0.85;
+}
+
+.videos {
+  padding: 20px 10px;
+  text-align: center;
+}
+
+.videos h4 {
+  font-size: 15px;
+  color: #ccc;
+  margin-bottom: 15px;
+}
+
+.video-frame {
+  margin-bottom: 15px;
+}
+
+.video-frame iframe {
+  width: 100%;
+  height: 200px;
+  border-radius: 10px;
+  border: none;
+}
+
+
     /* AJUSTE PARA TELAS MUITO PEQUENAS */
     @media (max-width: 360px) {
       .grid {
         grid-template-columns: repeat(2, 1fr);
       }
     }
+
+    #vote-animation {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.85);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+  z-index: 9999;
+}
+
+#vote-animation.show {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.vote-box {
+  background: #111;
+  padding: 30px;
+  border-radius: 14px;
+  text-align: center;
+  animation: pop 0.4s ease;
+}
+
+@keyframes pop {
+  from {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.vote-box h2 {
+  margin: 0 0 10px;
+}
+
+.vote-box p {
+  margin: 0;
+  font-size: 14px;
+  color: #ccc;
+}
+#vote-loading {
+  position: fixed;
+  inset: 0;
+  background: #000;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  z-index: 10000;
+}
+
+#vote-loading.active {
+  opacity: 1;
+  pointer-events: all;
+}
+
+#vote-loading img {
+  width: 120px;
+  animation: spin 1.6s linear infinite;
+}
+
+#vote-loading p {
+  margin-top: 14px;
+  font-size: 14px;
+  letter-spacing: 1px;
+  color: #ccc;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
   </style>
 </head>
+
+<div id="vote-loading">
+  <img src="./cartazes/loguinha.png">
+  <p>processando seu voto</p>
+</div>
+
 
 <body>
 
   <!-- IMAGEM DE ABERTURA -->
   <div class="hero">
-    <img src="./projeto/miradasII.inicio.png" alt="Projeto MIRADAS">
+    <img src="./cartazes/miradasII.inicio (2).png" alt="Projeto MIRADAS">
   </div>
 
   <!-- SEÇÃO DE VOTAÇÃO -->
@@ -115,26 +289,124 @@
 
       <!-- CARD 01 -->
       <div class="card">
-        <img src="./projeto/cartazes/MemoriaseEntrelacamentos.png" alt="Cartaz Curta 01">
-        <h5>Memorias e Entrelacamentos</h5>
+        <img src="./cartazes/MemoriaseEntrelacamentos.jpg" alt="Cartaz Curta 01">
+        <h5>Memórias e Entrelaçamentos</h5>
         <h6>MAMB1M</h6>
         <a href="https://docs.google.com/forms/d/e/1FAIpQLScd1YUyfrvfVcAw0Bk2OahG-yyuKi_y7mQjcLWCS2hzGjWp-A/viewform?usp=pp_url&entry.251979213=Mem%C3%B3rias+e+Entrela%C3%A7amentos+-+Mamb1M" target="_blank" class="vote-btn">VOTAR</a>
       </div>
 
-      <!-- CARD 02 -->
       <div class="card">
-        <img src="./projeto/cartazes/largartas.png" alt="Cartaz Curta 02">
-        <h5>Largatas não falam</h5>
+        <img src="./cartazes/Asraízescantam (1).jpg" alt="Cartaz Curta 03">
+        <h5>As raízes cantam</h5>
+        <h6>MAMB1V</h6>
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLScd1YUyfrvfVcAw0Bk2OahG-yyuKi_y7mQjcLWCS2hzGjWp-A/viewform?usp=pp_url&entry.251979213=As+ra%C3%ADzes+cantam+-+Mamb2V" target="_blank" class="vote-btn">VOTAR</a>
+      </div>
+
+      <div class="card">
+        <img src="./cartazes/tictac.jpg" alt="Cartaz Curta 03">
+        <h5>Tic tac da ausência</h5>
+        <h6>MAMB1V</h6>
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLScd1YUyfrvfVcAw0Bk2OahG-yyuKi_y7mQjcLWCS2hzGjWp-A/viewform?usp=pp_url&entry.251979213=As+ra%C3%ADzes+cantam+-+Mamb2V" target="_blank" class="vote-btn">VOTAR</a>
+      </div>
+
+      <div class="card">
+        <img src="./cartazes/partedemim.jpg" alt="Cartaz Curta 03">
+        <h5>Parte de mim ficou em você</h5>
+        <h6>MAMB1V</h6>
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLScd1YUyfrvfVcAw0Bk2OahG-yyuKi_y7mQjcLWCS2hzGjWp-A/viewform?usp=pp_url&entry.251979213=As+ra%C3%ADzes+cantam+-+Mamb2V" target="_blank" class="vote-btn">VOTAR</a>
+      </div>
+
+      <div class="card">
+        <img src="./cartazes/entreoolhardehoje.jpg" alt="Cartaz Curta 04">
+        <h5>Entre o olhar de hoje e a lembrança do ontem</h5>
+        <h6>MAMB1M</h6>
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLScd1YUyfrvfVcAw0Bk2OahG-yyuKi_y7mQjcLWCS2hzGjWp-A/viewform?usp=pp_url&entry.251979213=Entre+o+olhar+de+hoje+e+a+lembran%C3%A7a+do+ontem+-+Mamb1M" target="_blank" class="vote-btn">VOTAR</a>
+      </div>
+
+      <div class="card">
+        <img src="./cartazes/vislumbre.jpg" alt="Cartaz Curta 04">
+        <h5>Vislumbre</h5>
+        <h6>MAMB1M</h6>
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLScd1YUyfrvfVcAw0Bk2OahG-yyuKi_y7mQjcLWCS2hzGjWp-A/viewform?usp=pp_url&entry.251979213=Entre+o+olhar+de+hoje+e+a+lembran%C3%A7a+do+ontem+-+Mamb1M" target="_blank" class="vote-btn">VOTAR</a>
+      </div>
+
+      <div class="card">
+        <img src="./cartazes/carrego.jpg" alt="Cartaz Curta 04">
+        <h5>Carrego o que os olhos viram</h5>
+        <h6>MAMB1V</h6>
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLScd1YUyfrvfVcAw0Bk2OahG-yyuKi_y7mQjcLWCS2hzGjWp-A/viewform?usp=pp_url&entry.251979213=Entre+o+olhar+de+hoje+e+a+lembran%C3%A7a+do+ontem+-+Mamb1M" target="_blank" class="vote-btn">VOTAR</a>
+      </div>
+
+      <div class="card">
+        <img src="./cartazes/aguas.jpg" alt="Cartaz Curta 04">
+        <h5>Águas no olhar</h5>
+        <h6>MAMB1M</h6>
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLScd1YUyfrvfVcAw0Bk2OahG-yyuKi_y7mQjcLWCS2hzGjWp-A/viewform?usp=pp_url&entry.251979213=Entre+o+olhar+de+hoje+e+a+lembran%C3%A7a+do+ontem+-+Mamb1M" target="_blank" class="vote-btn">VOTAR</a>
+      </div>
+
+      <div class="card">
+        <img src="./cartazes/largatasnovamente.jpg" alt="Cartaz Curta 02">
+        <h5>Lagartas não falam</h5>
         <h6>EDIFIC1M</h6>
         <a href="https://docs.google.com/forms/d/e/1FAIpQLScd1YUyfrvfVcAw0Bk2OahG-yyuKi_y7mQjcLWCS2hzGjWp-A/viewform?usp=pp_url&entry.251979213=Largartas+n%C3%A3o+falam+-+Edific1M" target="_blank" class="vote-btn">VOTAR</a>
       </div>
 
-      <!-- CARD 03 -->
       <div class="card">
-        <img src="./projeto/cartazes/Asraízescantam.jpg" alt="Cartaz Curta 03">
-        <h5>As raízes encantam</h5>
-        <h6>MAMB1V</h6>
-        <a href="https://docs.google.com/forms/d/e/1FAIpQLScd1YUyfrvfVcAw0Bk2OahG-yyuKi_y7mQjcLWCS2hzGjWp-A/viewform?usp=pp_url&entry.251979213=As+ra%C3%ADzes+cantam+-+Mamb2V" target="_blank" class="vote-btn">VOTAR</a>
+        <img src="./cartazes/ressonancia.jpg" alt="Cartaz Curta 02">
+        <h5>Ressonância</h5>
+        <h6>EDIFIC1M</h6>
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLScd1YUyfrvfVcAw0Bk2OahG-yyuKi_y7mQjcLWCS2hzGjWp-A/viewform?usp=pp_url&entry.251979213=Largartas+n%C3%A3o+falam+-+Edific1M" target="_blank" class="vote-btn">VOTAR</a>
+      </div>
+
+      <div class="card">
+        <img src="./cartazes/vozes.jpg" alt="Cartaz Curta 02">
+        <h5>Vozes que voltam</h5>
+        <h6>EDIFIC1M</h6>
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLScd1YUyfrvfVcAw0Bk2OahG-yyuKi_y7mQjcLWCS2hzGjWp-A/viewform?usp=pp_url&entry.251979213=Largartas+n%C3%A3o+falam+-+Edific1M" target="_blank" class="vote-btn">VOTAR</a>
+      </div>
+
+      <div class="card">
+        <img src="./cartazes/camaleao.jpg" alt="Cartaz Curta 02">
+        <h5>Camaleão</h5>
+        <h6>EDIFIC1V</h6>
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLScd1YUyfrvfVcAw0Bk2OahG-yyuKi_y7mQjcLWCS2hzGjWp-A/viewform?usp=pp_url&entry.251979213=Largartas+n%C3%A3o+falam+-+Edific1M" target="_blank" class="vote-btn">VOTAR</a>
+      </div>
+
+      <div class="card">
+        <img src="./cartazes/terreiro.jpg" alt="Cartaz Curta 02">
+        <h5>O terreiro e as vozes</h5>
+        <h6>EDIFIC1V</h6>
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLScd1YUyfrvfVcAw0Bk2OahG-yyuKi_y7mQjcLWCS2hzGjWp-A/viewform?usp=pp_url&entry.251979213=Largartas+n%C3%A3o+falam+-+Edific1M" target="_blank" class="vote-btn">VOTAR</a>
+      </div>
+
+      <div class="card">
+        <img src="./cartazes/perpetuo.jpg" alt="Cartaz Curta 02">
+        <h5>Perpétuo</h5>
+        <h6>EDIFIC1V</h6>
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLScd1YUyfrvfVcAw0Bk2OahG-yyuKi_y7mQjcLWCS2hzGjWp-A/viewform?usp=pp_url&entry.251979213=Largartas+n%C3%A3o+falam+-+Edific1M" target="_blank" class="vote-btn">VOTAR</a>
+      </div>
+
+      <div class="card">
+        <img src="./cartazes/sorte.jpg" alt="Cartaz Curta 02">
+        <h5>A sorte mora aqui</h5>
+        <h6>EDIFIC1V</h6>
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLScd1YUyfrvfVcAw0Bk2OahG-yyuKi_y7mQjcLWCS2hzGjWp-A/viewform?usp=pp_url&entry.251979213=Largartas+n%C3%A3o+falam+-+Edific1M" target="_blank" class="vote-btn">VOTAR</a>
+      </div>
+
+
+
+      <div class="card">
+        <img src="./cartazes/sobomesmo.jpg" alt="Cartaz Curta 02">
+        <h5>Sob o mesmo sol</h5>
+        <h6>INFOWEB1V</h6>
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLScd1YUyfrvfVcAw0Bk2OahG-yyuKi_y7mQjcLWCS2hzGjWp-A/viewform?usp=pp_url&entry.251979213=Largartas+n%C3%A3o+falam+-+Edific1M" target="_blank" class="vote-btn">VOTAR</a>
+      </div>
+
+      <div class="card">
+        <img src="./cartazes/renascido.jpg" alt="Cartaz Curta 02">
+        <h5>Renascido</h5>
+        <h6>INFOWEB1V</h6>
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLScd1YUyfrvfVcAw0Bk2OahG-yyuKi_y7mQjcLWCS2hzGjWp-A/viewform?usp=pp_url&entry.251979213=Largartas+n%C3%A3o+falam+-+Edific1M" target="_blank" class="vote-btn">VOTAR</a>
       </div>
 
       <!-- DUPLIQUE ATÉ O 22 -->
@@ -142,9 +414,116 @@
     </div>
   </div>
 
+  <div class="social">
+  <p>Nos siga nas redes sociais</p>
+
+  <a href="https://www.instagram.com/miradas.ifrn/"
+     target="_blank" class="social-btn instagram">
+    <i class="fa-brands fa-instagram"></i>
+    Instagram
+  </a>
+
+  <a href="https://www.youtube.com/@miradasifrn"
+     target="_blank" class="social-btn youtube">
+    <i class="fa-brands fa-youtube"></i>
+    YouTube
+  </a>
+</div>
+
+<div class="videos">
+  <h4>Assista aos curtas do MIRADAS</h4>
+  <div id="video-list"></div>
+  <div class="video-container">
+    <video 
+      src="./video/video.miradas.mp4"
+      autoplay
+      muted
+      loop
+      playsinline>
+    </video>
+  </div>
+</div>
+
+
+
+<!--<script>
+  const videos = [
+    "zIILcXere9Y",
+    "6G-8g-F2Fg0",
+    // adicione mais IDs aqui
+  ];
+
+  // Embaralhar a ordem dos vídeos
+  videos.sort(() => Math.random() - 0.5);
+
+  const container = document.getElementById("video-list");
+
+  videos.forEach((id, index) => {
+    const div = document.createElement("div");
+    div.className = "video-frame";
+
+    // autoplay apenas no primeiro vídeo
+    const autoplay = index === 0 ? "1" : "0";
+
+    div.innerHTML = `
+      <iframe
+        src="https://www.youtube.com/embed/${id}?autoplay=${autoplay}&mute=1"
+        allow="autoplay; encrypted-media"
+        allowfullscreen>
+      </iframe>
+    `;
+
+    container.appendChild(div);
+  });
+</script>-->
+<script>
+  const cards = document.querySelectorAll(".card");
+
+  const observer = new IntersectionObserver(
+    entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("show");
+        }
+      });
+    },
+    {
+      threshold: 0.2
+    }
+  );
+
+  cards.forEach(card => observer.observe(card));
+
+
+  
+</script>
+
+<script>
+  const voteButtons = document.querySelectorAll(".vote-btn");
+  const loading = document.getElementById("vote-loading");
+
+  voteButtons.forEach(btn => {
+    btn.addEventListener("click", e => {
+      e.preventDefault();
+      const link = btn.href;
+      loading.classList.add("active");
+
+      setTimeout(() => {
+        window.open(link, "_blank");
+        loading.classList.remove("active");
+      }, 1800);
+    });
+  });
+</script>
+
+
+
+
+
+
   <!-- IMAGEM FINAL -->
   <div class="footer-img">
-    <img src="./projeto/fimMiradas.png" alt="Encerramento MIRADAS">
+    <img src="./cartazes/fimMiradas (1).png" alt="Encerramento MIRADAS">
   </div>
 
 </body>
